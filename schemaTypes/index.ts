@@ -1,1 +1,58 @@
-export const schemaTypes = []
+// Barrel export for all Sanity schemas.
+// Import this file in your sanity.config.ts:
+//
+//   import { schemaTypes } from './sanity/schemas'
+//   export default defineConfig({ schema: { types: schemaTypes } })
+
+export { blog } from "./blog";
+export { blogCategory } from "./blogCategory";
+export { tag } from "./tag";
+export { pageSection } from "./pageSection";
+export { page } from "./page";
+export { pageType } from "./pageType";
+export { successStory } from "./successStory";
+export { testimonial } from "./testimonial";
+export { video } from "./video";
+export { videoCategory } from "./videoCategory";
+export { menuItem, navigationMenu } from "./navigationMenu";
+export { menuType } from "./menuType";
+export { siteSettings } from "./siteSettings";
+export { structuredData } from "./structuredData";
+export { redirect } from "./redirect";
+
+import { blog } from "./blog";
+import { blogCategory } from "./blogCategory";
+import { tag } from "./tag";
+import { pageSection } from "./pageSection";
+import { page } from "./page";
+import { pageType } from "./pageType";
+import { successStory } from "./successStory";
+import { testimonial } from "./testimonial";
+import { video } from "./video";
+import { videoCategory } from "./videoCategory";
+import { menuItem, navigationMenu } from "./navigationMenu";
+import { menuType } from "./menuType";
+import { siteSettings } from "./siteSettings";
+import { structuredData } from "./structuredData";
+import { redirect } from "./redirect";
+
+export const schemaTypes = [
+  // Document types
+  blog,
+  blogCategory,
+  tag,
+  page,
+  pageSection,
+  pageType,
+  successStory,
+  testimonial,
+  video,
+  videoCategory,
+  navigationMenu,
+  menuType,
+  siteSettings,
+  structuredData,
+  redirect,
+  // Object types (used inline inside documents)
+  menuItem,
+];
