@@ -45,6 +45,20 @@ export const hero = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle',
+      media: 'image',
+    },
+    prepare({title, subtitle, media}) {
+      return {
+        title: 'Hero',
+        subtitle: title || subtitle,
+        media,
+      }
+    },
+  },
 })
 
 export const statsContent = defineType({
@@ -85,6 +99,20 @@ export const statsContent = defineType({
       of: [{type: 'string'}],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle',
+      media: 'image',
+    },
+    prepare({title, subtitle, media}) {
+      return {
+        title: 'Stats Content',
+        subtitle: title || subtitle,
+        media,
+      }
+    },
+  },
 })
 
 export const iconCardGrid = defineType({
@@ -113,6 +141,18 @@ export const iconCardGrid = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle',
+    },
+    prepare({title, subtitle}) {
+      return {
+        title: 'Icon Card Grid',
+        subtitle: title || subtitle,
+      }
+    },
+  },
 })
 
 export const contentWithImage = defineType({
@@ -143,6 +183,20 @@ export const contentWithImage = defineType({
       of: [{type: 'string'}],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'imagePosition',
+      media: 'image',
+    },
+    prepare({title, subtitle, media}) {
+      return {
+        title: 'Content With Image',
+        subtitle: title ? `${title}${subtitle ? ` · image ${subtitle}` : ''}` : undefined,
+        media,
+      }
+    },
+  },
 })
 
 export const teamGrid = defineType({
@@ -178,6 +232,18 @@ export const teamGrid = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle',
+    },
+    prepare({title, subtitle}) {
+      return {
+        title: 'Team Grid',
+        subtitle: title || subtitle,
+      }
+    },
+  },
 })
 
 export const aboutHero = defineType({
@@ -189,6 +255,18 @@ export const aboutHero = defineType({
     defineField({name: 'subtitle', title: 'Subtitle', type: 'string'}),
     defineField({name: 'link', title: 'Link', type: 'string'}),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle',
+    },
+    prepare({title, subtitle}) {
+      return {
+        title: 'About Hero',
+        subtitle: title || subtitle,
+      }
+    },
+  },
 })
 
 export const aboutIntro = defineType({
@@ -202,6 +280,18 @@ export const aboutIntro = defineType({
     defineField({name: 'points', title: 'Points', type: 'array', of: [{type: 'string'}]}),
     defineField({name: 'highlights', title: 'Highlights', type: 'array', of: [{type: 'string'}]}),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle',
+    },
+    prepare({title, subtitle}) {
+      return {
+        title: 'About Intro',
+        subtitle: title || subtitle,
+      }
+    },
+  },
 })
 
 export const highlightQuote = defineType({
@@ -212,6 +302,17 @@ export const highlightQuote = defineType({
     defineField({name: 'description', title: 'Description', type: 'text', rows: 3}),
     defineField({name: 'link', title: 'Link', type: 'string'}),
   ],
+  preview: {
+    select: {
+      description: 'description',
+    },
+    prepare({description}) {
+      return {
+        title: 'Highlight Quote',
+        subtitle: description,
+      }
+    },
+  },
 })
 
 export const reasonsGrid = defineType({
@@ -240,6 +341,18 @@ export const reasonsGrid = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle',
+    },
+    prepare({title, subtitle}) {
+      return {
+        title: 'Reasons Grid',
+        subtitle: title || subtitle,
+      }
+    },
+  },
 })
 
 export const valuesSection = defineType({
@@ -273,6 +386,19 @@ export const valuesSection = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      subtitle: 'subtitle',
+      media: 'image',
+    },
+    prepare({subtitle, media}) {
+      return {
+        title: 'Values Section',
+        subtitle,
+        media,
+      }
+    },
+  },
 })
 
 export const statsProgress = defineType({
@@ -299,6 +425,18 @@ export const statsProgress = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      description: 'description',
+    },
+    prepare({title, description}) {
+      return {
+        title: 'Stats Progress',
+        subtitle: title || description,
+      }
+    },
+  },
 })
 
 export const ctaSection = defineType({
@@ -319,6 +457,18 @@ export const ctaSection = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      ctaLabel: 'primaryCta.label',
+    },
+    prepare({title, ctaLabel}) {
+      return {
+        title: 'CTA Section',
+        subtitle: title || ctaLabel,
+      }
+    },
+  },
 })
 
 export const facilityFeature = defineType({
@@ -353,6 +503,20 @@ export const facilityFeature = defineType({
       fields: [defineField({name: 'altText', title: 'Alt Text', type: 'string'})],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle',
+      media: 'image',
+    },
+    prepare({title, subtitle, media}) {
+      return {
+        title: 'Facility Feature',
+        subtitle: title || subtitle,
+        media,
+      }
+    },
+  },
 })
 
 export const patientCareServices = defineType({
@@ -396,6 +560,20 @@ export const patientCareServices = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      inpatientTitle: 'inpatient.title',
+      outpatientTitle: 'outpatient.title',
+      media: 'inpatient.image',
+    },
+    prepare({inpatientTitle, outpatientTitle, media}) {
+      return {
+        title: 'Patient Care Services',
+        subtitle: [inpatientTitle, outpatientTitle].filter(Boolean).join(' · '),
+        media,
+      }
+    },
+  },
 })
 
 export const timelineSlider = defineType({
@@ -421,6 +599,18 @@ export const timelineSlider = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle',
+    },
+    prepare({title, subtitle}) {
+      return {
+        title: 'Timeline Slider',
+        subtitle: title || subtitle,
+      }
+    },
+  },
 })
 
 export const heroSlider = defineType({
@@ -457,6 +647,20 @@ export const heroSlider = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      titlePrefix: 'titlePrefix',
+      titleHighlight: 'titleHighlight',
+      media: 'image',
+    },
+    prepare({titlePrefix, titleHighlight, media}) {
+      return {
+        title: 'Hero Slider',
+        subtitle: [titlePrefix, titleHighlight].filter(Boolean).join(' '),
+        media,
+      }
+    },
+  },
 })
 
 export const imageCardGrid = defineType({
@@ -491,6 +695,18 @@ export const imageCardGrid = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle',
+    },
+    prepare({title, subtitle}) {
+      return {
+        title: 'Image Card Grid',
+        subtitle: title || subtitle,
+      }
+    },
+  },
 })
 
 export const inquiryForm = defineType({
@@ -508,6 +724,18 @@ export const inquiryForm = defineType({
       options: {list: ['detailed', 'simple']},
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      variant: 'variant',
+    },
+    prepare({title, variant}) {
+      return {
+        title: 'Inquiry Form',
+        subtitle: title ? `${title}${variant ? ` · ${variant}` : ''}` : variant,
+      }
+    },
+  },
 })
 
 export const mapEmbed = defineType({
@@ -529,6 +757,17 @@ export const mapEmbed = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      pageTitle: 'title',
+    },
+    prepare({pageTitle}) {
+      return {
+        title: 'Map Embed',
+        subtitle: pageTitle,
+      }
+    },
+  },
 })
 
 export const paragraphEditor = defineType({
@@ -543,6 +782,23 @@ export const paragraphEditor = defineType({
       of: [{type: 'block'}],
     }),
   ],
+  preview: {
+    select: {
+      content: 'content',
+    },
+    prepare({content}) {
+      const firstBlock = Array.isArray(content) && content[0]
+      const text =
+        firstBlock?.children
+          ?.filter((c: {_type: string}) => c._type === 'span')
+          ?.map((c: {text: string}) => c.text)
+          ?.join('') ?? ''
+      return {
+        title: 'Paragraph Editor',
+        subtitle: text || undefined,
+      }
+    },
+  },
 })
 
 export const sectionTypes = [
