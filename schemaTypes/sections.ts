@@ -68,6 +68,8 @@ export const statsContent = defineType({
   fields: [
     defineField({name: 'title', title: 'Title', type: 'string'}),
     defineField({name: 'subtitle', title: 'Subtitle', type: 'string'}),
+    defineField({name: 'tagline', title: 'Tagline', type: 'string'}),
+    defineField({name: 'contentTitle', title: 'Content Title', type: 'string'}),
     defineField({name: 'description', title: 'Description', type: 'text', rows: 3}),
     defineField({name: 'link', title: 'Link', type: 'string'}),
     defineField({
@@ -301,6 +303,13 @@ export const highlightQuote = defineType({
   fields: [
     defineField({name: 'description', title: 'Description', type: 'text', rows: 3}),
     defineField({name: 'link', title: 'Link', type: 'string'}),
+    defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: {hotspot: true},
+      fields: [defineField({name: 'altText', title: 'Alt Text', type: 'string'})],
+    }),
   ],
   preview: {
     select: {
@@ -618,20 +627,79 @@ export const heroSlider = defineType({
   title: 'Hero Slider',
   type: 'object',
   fields: [
-    defineField({name: 'titlePrefix', title: 'Title Prefix', type: 'string'}),
-    defineField({name: 'titleHighlight', title: 'Title Highlight', type: 'string'}),
-    defineField({name: 'subtitle', title: 'Subtitle', type: 'string'}),
+    defineField({
+      name: 'slides',
+      title: 'Slides',
+      type: 'array',
+      description: 'Add multiple slides to show in the Hero Slider',
+      of: [
+        {
+          type: 'object',
+          name: 'slide',
+          title: 'Slide',
+          fields: [
+            defineField({name: 'titlePrefix', title: 'Title Prefix', type: 'string'}),
+            defineField({name: 'titleHighlight', title: 'Title Highlight', type: 'string'}),
+            defineField({name: 'subtitle', title: 'Subtitle', type: 'string'}),
+            defineField({
+              name: 'image',
+              title: 'Image',
+              type: 'image',
+              options: {hotspot: true},
+              fields: [defineField({name: 'altText', title: 'Alt Text', type: 'string'})],
+            }),
+            defineField({
+              name: 'primaryCta',
+              title: 'Primary CTA',
+              type: 'object',
+              fields: [
+                defineField({name: 'label', title: 'Label', type: 'string'}),
+                defineField({name: 'href', title: 'Href', type: 'string'}),
+              ],
+            }),
+            defineField({
+              name: 'secondaryCta',
+              title: 'Secondary CTA',
+              type: 'object',
+              fields: [
+                defineField({name: 'label', title: 'Label', type: 'string'}),
+                defineField({name: 'href', title: 'Href', type: 'string'}),
+              ],
+            }),
+          ],
+          preview: {
+            select: {
+              titlePrefix: 'titlePrefix',
+              titleHighlight: 'titleHighlight',
+              media: 'image',
+            },
+            prepare({titlePrefix, titleHighlight, media}) {
+              return {
+                title: [titlePrefix, titleHighlight].filter(Boolean).join(' ') || 'Slide',
+                media,
+              }
+            },
+          },
+        },
+      ],
+    }),
+    // Legacy Single Slide fields for compatibility
+    defineField({name: 'titlePrefix', title: 'Title Prefix (Legacy Single Slide)', type: 'string', description: 'Used only if slides array is empty'}),
+    defineField({name: 'titleHighlight', title: 'Title Highlight (Legacy Single Slide)', type: 'string', description: 'Used only if slides array is empty'}),
+    defineField({name: 'subtitle', title: 'Subtitle (Legacy Single Slide)', type: 'string', description: 'Used only if slides array is empty'}),
     defineField({
       name: 'image',
-      title: 'Image',
+      title: 'Image (Legacy Single Slide)',
       type: 'image',
+      description: 'Used only if slides array is empty',
       options: {hotspot: true},
       fields: [defineField({name: 'altText', title: 'Alt Text', type: 'string'})],
     }),
     defineField({
       name: 'primaryCta',
-      title: 'Primary CTA',
+      title: 'Primary CTA (Legacy Single Slide)',
       type: 'object',
+      description: 'Used only if slides array is empty',
       fields: [
         defineField({name: 'label', title: 'Label', type: 'string'}),
         defineField({name: 'href', title: 'Href', type: 'string'}),
@@ -639,8 +707,9 @@ export const heroSlider = defineType({
     }),
     defineField({
       name: 'secondaryCta',
-      title: 'Secondary CTA',
+      title: 'Secondary CTA (Legacy Single Slide)',
       type: 'object',
+      description: 'Used only if slides array is empty',
       fields: [
         defineField({name: 'label', title: 'Label', type: 'string'}),
         defineField({name: 'href', title: 'Href', type: 'string'}),
@@ -649,15 +718,16 @@ export const heroSlider = defineType({
   ],
   preview: {
     select: {
-      titlePrefix: 'titlePrefix',
+      slides: 'slides',
       titleHighlight: 'titleHighlight',
       media: 'image',
     },
-    prepare({titlePrefix, titleHighlight, media}) {
+    prepare({slides, titleHighlight, media}) {
+      const slideCount = Array.isArray(slides) ? slides.length : 0;
       return {
         title: 'Hero Slider',
-        subtitle: [titlePrefix, titleHighlight].filter(Boolean).join(' '),
-        media,
+        subtitle: slideCount > 0 ? `${slideCount} Slides` : `1 Slide (Legacy: ${titleHighlight || 'Untitled'})`,
+        media: slideCount > 0 ? slides[0]?.image : media,
       }
     },
   },
@@ -716,7 +786,14 @@ export const inquiryForm = defineType({
   fields: [
     defineField({name: 'title', title: 'Title', type: 'string'}),
     defineField({name: 'subtitle', title: 'Subtitle', type: 'string'}),
-    defineField({name: 'formId', title: 'Form ID', type: 'string'}),
+    defineField({name: 'formId', title: 'Form ID (Legacy)', type: 'string', description: 'Used for legacy forms linked by ID'}),
+    defineField({
+      name: 'form',
+      title: 'Select Form',
+      type: 'reference',
+      to: [{type: 'form'}],
+      description: 'Select a form built with the Sanity Form Builder',
+    }),
     defineField({
       name: 'variant',
       title: 'Variant',
@@ -801,7 +878,7 @@ export const paragraphEditor = defineType({
   },
 })
 
-export const sectionTypes = [
+const rawSectionTypes = [
   hero,
   statsContent,
   iconCardGrid,
@@ -823,3 +900,19 @@ export const sectionTypes = [
   mapEmbed,
   paragraphEditor,
 ]
+
+// Prepend the hideSection field to each section type dynamically for easy toggle in Sanity Studio
+rawSectionTypes.forEach((section) => {
+  if (section.fields) {
+    section.fields.unshift(
+      defineField({
+        name: 'hideSection',
+        title: 'Hide Section',
+        type: 'boolean',
+        initialValue: false,
+      })
+    )
+  }
+})
+
+export const sectionTypes = rawSectionTypes

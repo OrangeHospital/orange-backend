@@ -103,6 +103,13 @@ export const page = defineType({
           type: 'string',
           title: 'Target Keywords',
         }),
+        defineField({
+          name: 'schemaMarkup',
+          type: 'text',
+          title: 'Schema Markup (JSON-LD)',
+          description: 'Paste your custom JSON-LD schema markup here (either with <script> tags or just the raw JSON object). It will be injected into the head of the page.',
+          rows: 8,
+        }),
       ],
     }),
   ],

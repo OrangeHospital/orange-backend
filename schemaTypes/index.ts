@@ -16,9 +16,12 @@ export {videoCategory} from './videoCategory'
 export {menuItem, navigationMenu} from './navigationMenu'
 export {menuType} from './menuType'
 export {siteSettings} from './siteSettings'
+export {siteDetail} from './siteDetail'
+export {social} from './social'
 export {structuredData} from './structuredData'
 export {redirect} from './redirect'
 export {sectionTypes} from './sections'
+export {form, formField} from './form'
 
 import {blog} from './blog'
 import {blogCategory} from './blogCategory'
@@ -32,9 +35,12 @@ import {videoCategory} from './videoCategory'
 import {menuItem, navigationMenu} from './navigationMenu'
 import {menuType} from './menuType'
 import {siteSettings} from './siteSettings'
+import {siteDetail} from './siteDetail'
+import {social} from './social'
 import {structuredData} from './structuredData'
 import {redirect} from './redirect'
 import {sectionTypes} from './sections'
+import {form, formField} from './form'
 
 export const schemaTypes = [
   // Document types
@@ -50,9 +56,13 @@ export const schemaTypes = [
   navigationMenu,
   menuType,
   siteSettings,
+  siteDetail,
+  social,
   structuredData,
   redirect,
+  form,
   // Object types (used inline inside documents)
+  formField,
   menuItem,
   ...sectionTypes,
 ]
