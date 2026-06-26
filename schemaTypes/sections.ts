@@ -878,6 +878,70 @@ export const paragraphEditor = defineType({
   },
 })
 
+export const logoGrid = defineType({
+  name: 'logoGrid',
+  title: 'Logo Grid',
+  type: 'object',
+  fields: [
+    defineField({name: 'title', title: 'Title', type: 'string'}),
+    defineField({name: 'subtitle', title: 'Subtitle', type: 'string'}),
+    defineField({name: 'badge', title: 'Badge', type: 'string'}),
+    defineField({
+      name: 'layout',
+      title: 'Layout',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Default', value: 'default'},
+          {title: 'Two Column', value: 'two-column'},
+        ],
+      },
+      initialValue: 'default',
+    }),
+    defineField({name: 'description1', title: 'Description 1 (Legacy/Future)', type: 'string'}),
+    defineField({name: 'description2', title: 'Description 2 (Legacy/Future)', type: 'string'}),
+    defineField({name: 'ctaLabel', title: 'CTA Label (Legacy/Future)', type: 'string'}),
+    defineField({name: 'ctaLink', title: 'CTA Link (Legacy/Future)', type: 'string'}),
+    defineField({
+      name: 'items',
+      title: 'Items',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'logo',
+              title: 'Logo',
+              type: 'image',
+              options: {hotspot: true},
+              fields: [
+                defineField({name: 'altText', title: 'Alt Text', type: 'string'}),
+                defineField({name: 'caption', title: 'Caption', type: 'string'}),
+              ],
+            }),
+            defineField({name: 'title', title: 'Title', type: 'string', validation: (Rule) => Rule.required()}),
+            defineField({name: 'subtitle', title: 'Subtitle', type: 'string'}),
+            defineField({name: 'logoType', title: 'Logo Type', type: 'string'}),
+          ],
+        },
+      ],
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle',
+    },
+    prepare({title, subtitle}) {
+      return {
+        title: 'Logo Grid',
+        subtitle: title || subtitle,
+      }
+    },
+  },
+})
+
 const rawSectionTypes = [
   hero,
   statsContent,
@@ -899,6 +963,7 @@ const rawSectionTypes = [
   inquiryForm,
   mapEmbed,
   paragraphEditor,
+  logoGrid,
 ]
 
 // Prepend the hideSection field to each section type dynamically for easy toggle in Sanity Studio

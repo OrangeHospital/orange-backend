@@ -74,6 +74,7 @@ export const page = defineType({
         {type: 'inquiryForm'},
         {type: 'mapEmbed'},
         {type: 'paragraphEditor'},
+        {type: 'logoGrid'},
       ],
     }),
     defineField({

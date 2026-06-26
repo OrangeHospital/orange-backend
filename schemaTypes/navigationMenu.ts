@@ -50,7 +50,7 @@ export const menuItem = defineType({
     defineField({
       name: 'externalLink',
       title: 'External URL',
-      type: 'url',
+      type: 'string',
       hidden: ({parent}) => (parent as {linkType?: string})?.linkType !== 'external',
     }),
     defineField({
@@ -110,7 +110,7 @@ export const menuItem = defineType({
             }),
             defineField({
               name: 'externalLink',
-              type: 'url',
+              type: 'string',
               title: 'External URL',
             }),
             defineField({
