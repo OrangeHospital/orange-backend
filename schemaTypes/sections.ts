@@ -641,6 +641,7 @@ export const heroSlider = defineType({
             defineField({name: 'titlePrefix', title: 'Title Prefix', type: 'string'}),
             defineField({name: 'titleHighlight', title: 'Title Highlight', type: 'string'}),
             defineField({name: 'subtitle', title: 'Subtitle', type: 'string'}),
+            defineField({name: 'badge', title: 'Badge', type: 'string'}),
             defineField({
               name: 'image',
               title: 'Image',
@@ -681,6 +682,43 @@ export const heroSlider = defineType({
             },
           },
         },
+      ],
+    }),
+    defineField({
+      name: 'bottomItems',
+      title: 'Bottom Items',
+      type: 'array',
+      description: 'Checkmark points displayed at the bottom of the slide text content',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({name: 'title', title: 'Title', type: 'string'}),
+            defineField({name: 'icon', title: 'Icon (Lucide name, e.g. BadgeCheck, ShieldCheck)', type: 'string'}),
+          ],
+        },
+      ],
+    }),
+    defineField({
+      name: 'savedKidsTag',
+      title: 'Saved Kids Tag (Floating Card)',
+      type: 'object',
+      fields: [
+        defineField({name: 'show', title: 'Show Tag', type: 'boolean', initialValue: true}),
+        defineField({name: 'label', title: 'Label', type: 'string', initialValue: 'Saved this year'}),
+        defineField({name: 'value', title: 'Value', type: 'string', initialValue: '7,500+ kids'}),
+        defineField({name: 'avatars', title: 'Avatars Count Text', type: 'string', initialValue: '+9k'}),
+      ],
+    }),
+    defineField({
+      name: 'nicuTag',
+      title: 'NICU Tag (Floating Card)',
+      type: 'object',
+      fields: [
+        defineField({name: 'show', title: 'Show Tag', type: 'boolean', initialValue: true}),
+        defineField({name: 'label', title: 'Label', type: 'string', initialValue: 'Level 3 NICU'}),
+        defineField({name: 'value', title: 'Value', type: 'string', initialValue: 'Highest level of neonatal critical care'}),
+        defineField({name: 'stars', title: 'Stars Count (0-5)', type: 'number', initialValue: 5}),
       ],
     }),
     // Legacy Single Slide fields for compatibility
