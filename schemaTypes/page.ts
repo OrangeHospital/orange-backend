@@ -75,6 +75,8 @@ export const page = defineType({
         {type: 'mapEmbed'},
         {type: 'paragraphEditor'},
         {type: 'logoGrid'},
+        {type: 'announcementSection'},
+        {type: 'mapReview'},
       ],
     }),
     defineField({

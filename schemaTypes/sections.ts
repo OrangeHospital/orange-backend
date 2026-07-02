@@ -125,7 +125,19 @@ export const iconCardGrid = defineType({
     defineField({name: 'title', title: 'Title', type: 'string'}),
     defineField({name: 'subtitle', title: 'Subtitle', type: 'string'}),
     defineField({name: 'link', title: 'Link', type: 'string'}),
-    defineField({name: 'variant', title: 'Variant', type: 'string'}),
+    defineField({
+      name: 'variant',
+      title: 'Variant',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Default (Specialties)', value: 'default'},
+          {title: 'Facilities (Image Grid)', value: 'facilities'},
+          {title: 'Informative (Features Grid)', value: 'informative'},
+        ],
+      },
+      initialValue: 'default',
+    }),
     defineField({
       name: 'cards',
       title: 'Cards',
@@ -980,6 +992,127 @@ export const logoGrid = defineType({
   },
 })
 
+export const announcementSection = defineType({
+  name: 'announcementSection',
+  title: 'Announcement Section',
+  type: 'object',
+  fields: [
+    defineField({name: 'title', title: 'Internal Title', type: 'string'}),
+    defineField({name: 'sectionTitle', title: 'Section Title (Heading)', type: 'string', initialValue: 'News & Announcements'}),
+    defineField({name: 'subtitle', title: 'Subtitle', type: 'string', initialValue: 'Latest Updates'}),
+    defineField({name: 'description', title: 'Description Text', type: 'text', rows: 3}),
+    defineField({
+      name: 'items',
+      title: 'Announcement Items',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'announcementItem',
+          title: 'Announcement Item',
+          fields: [
+            defineField({
+              name: 'badgeText',
+              title: 'Badge Text',
+              type: 'string',
+              initialValue: 'BIG ANNOUNCEMENT',
+              description: 'Role/subtitle shown under the name (e.g., "Managing Director", "Announcement").',
+            }),
+            defineField({
+              name: 'headline',
+              title: 'Title / Headline',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'shortDescription',
+              title: 'Description / Bio',
+              type: 'text',
+              rows: 4,
+            }),
+            defineField({
+              name: 'points',
+              title: 'Bullet Points / Services',
+              type: 'array',
+              of: [{type: 'string'}],
+            }),
+            defineField({
+              name: 'image',
+              title: 'Left Side Image',
+              type: 'image',
+              options: {hotspot: true},
+              fields: [defineField({name: 'altText', title: 'Alt Text', type: 'string'})],
+            }),
+            defineField({
+              name: 'link',
+              title: 'Card Click Link (e.g., /ongc-empanelment)',
+              type: 'string',
+            }),
+          ],
+          preview: {
+            select: {
+              headline: 'headline',
+              badgeText: 'badgeText',
+              media: 'image',
+            },
+            prepare({headline, badgeText, media}) {
+              return {
+                title: headline || 'Untitled Announcement',
+                subtitle: badgeText,
+                media,
+              }
+            },
+          },
+        },
+      ],
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      items: 'items',
+    },
+    prepare({title, items}) {
+      const itemCount = Array.isArray(items) ? items.length : 0
+      return {
+        title: 'Announcement Section',
+        subtitle: `${title || 'Announcement'} (${itemCount} items)`,
+      }
+    },
+  },
+})
+
+export const mapReview = defineType({
+  name: 'mapReview',
+  title: 'Google Map Review',
+  type: 'object',
+  fields: [
+    defineField({name: 'title', title: 'Internal Title', type: 'string'}),
+    defineField({name: 'sectionTitle', title: 'Section Title (Heading)', type: 'string', initialValue: 'What Our Patients Say'}),
+    defineField({name: 'subtitle', title: 'Subtitle', type: 'string', initialValue: 'Reviews'}),
+    defineField({name: 'description', title: 'Description Text', type: 'text', rows: 3}),
+    defineField({
+      name: 'showGoogleReviews',
+      title: 'Show Google Reviews',
+      type: 'boolean',
+      initialValue: true,
+      description: 'If enabled, Google reviews will be fetched and shown automatically in a carousel slider.',
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      sectionTitle: 'sectionTitle',
+    },
+    prepare({title, sectionTitle}) {
+      return {
+        title: 'Google Map Review',
+        subtitle: title || sectionTitle,
+      }
+    },
+  },
+})
+
 const rawSectionTypes = [
   hero,
   statsContent,
@@ -1002,6 +1135,8 @@ const rawSectionTypes = [
   mapEmbed,
   paragraphEditor,
   logoGrid,
+  announcementSection,
+  mapReview,
 ]
 
 // Prepend the hideSection field to each section type dynamically for easy toggle in Sanity Studio
