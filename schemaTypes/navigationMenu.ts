@@ -22,6 +22,13 @@ export const menuItem = defineType({
       initialValue: true,
     }),
     defineField({
+      name: 'isDisabled',
+      title: 'Disable Item',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Toggle on to disable this menu item so it is excluded from frontend',
+    }),
+    defineField({
       name: 'linkType',
       title: 'Link Type',
       type: 'string',
@@ -62,7 +69,14 @@ export const menuItem = defineType({
       name: 'status',
       title: 'Status',
       type: 'number',
+      options: {
+        list: [
+          {title: 'Active (1)', value: 1},
+          {title: 'Disabled (0)', value: 0},
+        ],
+      },
       initialValue: 1,
+      description: '1 = Active, 0 = Disabled',
     }),
     defineField({
       name: 'children',
@@ -71,6 +85,16 @@ export const menuItem = defineType({
       of: [
         {
           type: 'object',
+          preview: {
+            select: {title: 'menuName', status: 'status', isDisabled: 'isDisabled'},
+            prepare({title, status, isDisabled}) {
+              const disabled = isDisabled === true || status === 0
+              return {
+                title: title || 'Untitled Sub-item',
+                subtitle: disabled ? '🔴 Disabled' : '🟢 Active',
+              }
+            },
+          },
           fields: [
             defineField({name: 'menuName', type: 'string', title: 'Label'}),
             defineField({
@@ -83,6 +107,13 @@ export const menuItem = defineType({
               type: 'boolean',
               title: 'Is Clickable',
               initialValue: true,
+            }),
+            defineField({
+              name: 'isDisabled',
+              type: 'boolean',
+              title: 'Disable Sub-item',
+              initialValue: false,
+              description: 'Toggle on to disable this sub-item from frontend',
             }),
             defineField({
               name: 'linkType',
@@ -122,7 +153,14 @@ export const menuItem = defineType({
               name: 'status',
               type: 'number',
               title: 'Status',
+              options: {
+                list: [
+                  {title: 'Active (1)', value: 1},
+                  {title: 'Disabled (0)', value: 0},
+                ],
+              },
               initialValue: 1,
+              description: '1 = Active, 0 = Disabled',
             }),
           ],
         },
@@ -130,7 +168,14 @@ export const menuItem = defineType({
     }),
   ],
   preview: {
-    select: {title: 'menuName'},
+    select: {title: 'menuName', status: 'status', isDisabled: 'isDisabled'},
+    prepare({title, status, isDisabled}) {
+      const disabled = isDisabled === true || status === 0
+      return {
+        title: title || 'Untitled Menu Item',
+        subtitle: disabled ? '🔴 Disabled' : '🟢 Active',
+      }
+    },
   },
 })
 
@@ -147,6 +192,26 @@ export const navigationMenu = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'isDisabled',
+      title: 'Disable Entire Menu',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Toggle on to disable/hide this entire navigation menu from the frontend',
+    }),
+    defineField({
+      name: 'status',
+      title: 'Status',
+      type: 'number',
+      options: {
+        list: [
+          {title: 'Active (1)', value: 1},
+          {title: 'Disabled (0)', value: 0},
+        ],
+      },
+      initialValue: 1,
+      description: '1 = Active, 0 = Disabled',
+    }),
+    defineField({
       name: 'items',
       title: 'Menu Items',
       type: 'array',
@@ -154,9 +219,13 @@ export const navigationMenu = defineType({
     }),
   ],
   preview: {
-    select: {title: 'menuType.name'},
-    prepare({title}) {
-      return {title: title || 'Navigation Menu'}
+    select: {title: 'menuType.name', status: 'status', isDisabled: 'isDisabled'},
+    prepare({title, status, isDisabled}) {
+      const disabled = isDisabled === true || status === 0
+      return {
+        title: title || 'Navigation Menu',
+        subtitle: disabled ? '🔴 Disabled' : '🟢 Active',
+      }
     },
   },
 })
